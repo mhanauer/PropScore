@@ -24,7 +24,11 @@ propScore = as.data.frame(propScore)
 # Ratio means every data point will be matchd with one other data point
 m.out = matchit(public ~ size + minority + freeLunch, data = propScore, method = "nearest", ratio = 1)
 ```
-How we are going zelig with the matched data.  Think about the weights they need to be included in the anlaysis
+Next we want to analyze how well the matching procedure worked.  First we can look at a summary by using the summary function.  The summary function provides pieces of information for the full data set and the matched data set.  First it provides data on the balance for all of the data without matching.  It provides information the means of the treated (i.e. public as indicated by the 1 for the public variable) and the control (i.e. private as indicated by the 0 for public variable).  It also provides the standard deviation for the control group.  It provides means and sd's for both the treatment and control groups across each of the included covariates.  Next there is QQ columns for for the median, mean, and maximum quatiles differences between the treatment and control groups.  Smaller values indicate better matching data.  
+
+The summary of balance for matched data is interpreted int the same way as for the summary of balance for all data with the only difference being that the summary of balance for matched data uses only matched data.  Therefore, the user can compare the diffrences in means and reductions in quantiles to evaluate if the matching process reduced the observed differences between groups.  Finaly there is the percent balance improvement, which provides percentage improvement by using the matched data relative to all the data.  In this, there is no improvement, because we were able to match all of the data, which is likely because the data were randomly generated.
+
+Finally, there are two plots that researchers can review to evaluate the effecviness of the matching procedure.  First is the jitter plot, which shows the distirbution of unmatched pairs matched pairs for both treatment and control groups.  You can see how close the data are from the matched and unmatched groups demonstrating the matched groups similarities among the observed covariates.  Finally, we can evaluate a histogram of the matched and raw (i.e. total) data sets to evaluate how much better the matching procedures matched the data.   
 ```{r}
 summary(m.out)
 m.outCSV = match.data(m.out) 
