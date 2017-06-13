@@ -10,7 +10,6 @@ Here is a demonstration of creating analyzing matched data for propensity score 
 
 Running the MatchIt R program is easy.  First we create the model, which is a logisitic regression of the treatment (i.e. public school) regressed upon the following covariates: size, minority, and freelunch.  Next we need to select the data frame to use, which is the propScore data frame that contains all of the variables of interest.  Next we select the ratio, which we set to one indicating that each student in the treatment / public group will be matched with one student in the private / control group.  
 ```{r}
-install.packages("MatchIt")
 library(MatchIt)
 set.seed(12345)
 studentID = 1:10000
@@ -36,9 +35,9 @@ write.csv(m.outCSV, "m.outCSV.csv")
 plot(m.out, type = "jitter")
 plot(m.out, type = "hist")
 ```
-Analysis
+Finally, we can evaluate the impact of being in either a public school, by evaluating the significance of the public variable.
 ```{r}
-z.out = zelig(dep ~ public + minority + freeLunch + size, model = "ls",data = m.out)
+library(Zelig)
+z.out = zelig(dep ~ public + minority + freeLunch + size, model = "ls",data = m.outCSV)
 summary(z.out)
 ```
-
